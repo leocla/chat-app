@@ -1,0 +1,17 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "node chatting app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": "8.11.1"
+  },
+  "author": "Wong Chatting",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
