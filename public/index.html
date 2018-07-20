@@ -8,5 +8,20 @@
         <h2>Selamat Datang di Aplikasi Chatting</h2>
         <p>NODE CHAT APP</p>
 
+        <script src="/socket.io/socket.io.js">
+            
+        </script>
+        <script>
+            var socket = io();
+
+            socket.on('connect', () => {
+                console.log('connected to server')
+            })
+
+            // ini method asli dari socket.io --- disconnect
+            socket.on('disconnect', ()=> {
+                console.log('Putus dari server')
+            })
+        </script>
     </body>
 </html>
