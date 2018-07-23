@@ -6,22 +6,10 @@
     </head>
     <body>
         <h2>Selamat Datang di Aplikasi Chatting</h2>
-        <p>NODE CHAT APP</p>
+        <p>Aplikasi ini semacam chattingan</p>
+        <p>Aplikasi antara Server + Client yang saling berkomunikasi</p>
 
-        <script src="/socket.io/socket.io.js">
-            
-        </script>
-        <script>
-            var socket = io();
-
-            socket.on('connect', () => {
-                console.log('connected to server')
-            })
-
-            // ini method asli dari socket.io --- disconnect
-            socket.on('disconnect', ()=> {
-                console.log('Putus dari server')
-            })
-        </script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/index.js"></script>
     </body>
 </html>
