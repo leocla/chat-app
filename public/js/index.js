@@ -37,6 +37,13 @@ socket.on('disconnect', function() {
 // });
 
 // ~~~ baru ! solution ..
-socket.on('newMessage', function(pesan){
-    console.log('Pesan baru : ', JSON.stringify(pesan, undefined, 2))
+socket.on('message', function(newMessage){
+    console.log('Pesan baru : ', JSON.stringify(newMessage, undefined, 2))
 } )
+
+
+/**
+ * contoh pengiriman data chat
+ * ~~~~~~~~~~~~~~~~~~~
+ * socket.emit('createMessage', {from: 'Toni', text:'Hy dunia'})
+ */
