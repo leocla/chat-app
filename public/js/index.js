@@ -41,6 +41,21 @@ socket.on('message', function(newMessage){
     console.log('Pesan baru : ', JSON.stringify(newMessage, undefined, 2))
 } )
 
+socket.on('pesanBaru', function(newMessage){
+    console.log('Pesan Baru brooo: ', JSON.stringify(newMessage))
+})
+
+/// ~~~~~~~~~~~~~~~~ SECTION number (2.1) --- front end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ini untuk kemunculan di FRONT END
+socket.on('pesanDatang', function(pesan){
+    console.log('Pesan hahaha datang : ', JSON.stringify(pesan))
+})
+
+/// ~~~~~~~~~~~~~~~~ SECTION number (2.2) --- front end --- welcome by admin ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+socket.on('pesanCinta', function(pesan){
+    console.log(JSON.stringify(pesan, undefined, 2));
+})
+
 
 /**
  * contoh pengiriman data chat

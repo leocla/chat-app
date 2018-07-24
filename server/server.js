@@ -2,7 +2,6 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
-
 const publik_path = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000
 var app = express()
@@ -13,9 +12,10 @@ var app = express()
 
 var server = http.createServer(app)
 var io = socketIO(server)
-
 app.use(express.static(publik_path)) // middleware
 
+/// GET TIME --- membuat new variable waktu
+var time = new Date().getTime();
 
 /// calling IO
 // connection bukan membuat sendiri... tapi dari socket.io
@@ -23,7 +23,37 @@ app.use(express.static(publik_path)) // middleware
 io.on('connection', (socket) => { 
     console.log('User baru telah terkoneksi');
 
-    
+    //~~~~~~~ GUIDE
+    // socket.emit from Admin text ... Welcome to the chat app
+    // socket.broadcast.emit ... from Admin text ... New user joined
+
+    // ~~~~~~~~~~~~~~~~ SECTION number (2.2) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // socket.emit from Admin text ... Welcome to the chat app
+    socket.emit('pesanCinta', {
+        from : 'Admin',
+        text : 'Selamat datang di NODE CHAT APP',
+        createdAt : time
+    });
+
+    // socket.broadcast.emit ... from Admin text ... New user joined
+    socket.broadcast.emit('pesanCinta', {
+        from : 'Admin',
+        text: 'User baru bergabung woiiiiii',
+        createdAt : time
+    })
+
+    /// ~~~~~~~~~~~~~~~~ SECTION number (2.1) --- backend  ~~~~~~~~~~~~~~~~~~~~~~~~~
+    socket.on('Hahaha', (pesan) => { /// ini perintahnya.. ini buatan SAYA
+        console.log('buat pesan', pesan); /// ini muncul di SERVER
+
+        socket.broadcast.emit('pesanDatang', {  /// yang digunakan front end
+            from : pesan.from,
+            text: pesan.text,
+            dibuatPada : new Date().getTime()
+        })  
+
+    })
+
     //~~ iki solution broooo
     // socket.emit('newMessage', {
     //     from : "tika",
@@ -33,14 +63,21 @@ io.on('connection', (socket) => {
 
     socket.on('createMessage', (newMessage) => {
         console.log('create Message', newMessage);
+        //~~~ lama
+        /*
         io.emit('message', {
             from : newMessage.from,
             text : newMessage.text,
             createdAt : new Date().getTime()
+        }) */
+        //~~ broadcasting
+        socket.broadcast.emit('pesanBaru', {
+            from : newMessage.from,
+            text: newMessage.text,
+            createdAt : new Date().getTime()
         })
+
     });
-
-
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ini yang lama
     socket.emit('emailBaru', {
@@ -70,7 +107,7 @@ io.on('connection', (socket) => {
 
 })
 
-
+//~~~~~~~~~~~~~~~~~~~~~ SERVER LISTENING ~~~~~~~~~~~~~~~~~~~~~~~~
 server.listen(port, () => {
     console.log(`SERVER BERJALAN!!! in ${port}`)
 })
