@@ -23,17 +23,21 @@ app.use(express.static(publik_path)) // middleware
 io.on('connection', (socket) => { 
     console.log('User baru telah terkoneksi');
 
-
     
     //~~ iki solution broooo
-    socket.emit('newMessage', {
-        from : "tika",
-        text: 'Pokoke asik',
-        createdAt: 12345
-    })
+    // socket.emit('newMessage', {
+    //     from : "tika",
+    //     text: 'Pokoke asik',
+    //     createdAt: 12345
+    // })
 
     socket.on('createMessage', (newMessage) => {
         console.log('create Message', newMessage);
+        io.emit('message', {
+            from : newMessage.from,
+            text : newMessage.text,
+            createdAt : new Date().getTime()
+        })
     });
 
 

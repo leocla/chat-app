@@ -9,20 +9,21 @@ socket.on('connect', function() {
     console.log('connected to server');
 
     /// ~~~ client to server
+    /*
     socket.emit('createMessage', {
         from : 'Tono', 
         text: 'Hai, I am tono'
-    })
+    });
 
     socket.emit('createEmail', {
         to : 'asik@asik.com',
         text : 'Halo hahahha'
     });
 
-
     socket.emit('buatPesan', {
         text: "asik asiks jossss"
-    })
+    });
+    */
 });
 
 // ini method asli dari socket.io --- disconnect
