@@ -56,6 +56,14 @@ socket.on('pesanCinta', function(pesan){
     console.log(JSON.stringify(pesan, undefined, 2));
 })
 
+/// ~~~~~~~~~~~~~~~~ SECTION (2.3) in this file
+socket.emit('Hahaha', {
+    from : 'Tononk',
+    text : 'Hi'
+}, function(data){
+    console.log('Hore Got it :', data);
+});
+
 
 /**
  * contoh pengiriman data chat

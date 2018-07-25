@@ -2,9 +2,14 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
+const {generatePesan} = require('./utils/pesan')
+
 const publik_path = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000
 var app = express()
+
+// include module
+const pesan = require('./utils/pesan')
 
 // var server = http.createServer((req, res)=> {
 
@@ -23,34 +28,39 @@ var time = new Date().getTime();
 io.on('connection', (socket) => { 
     console.log('User baru telah terkoneksi');
 
+    // ~~~~~~~~~~~~~~~~ SECTION number (2.3)
+    socket.emit('pesanCinta', generatePesan('Admin', 'Selamat Datang di aplikasi chat'))
+    socket.broadcast.emit('pesanCinta', generatePesan('Admin', 'User baru joined'))
     //~~~~~~~ GUIDE
     // socket.emit from Admin text ... Welcome to the chat app
     // socket.broadcast.emit ... from Admin text ... New user joined
 
     // ~~~~~~~~~~~~~~~~ SECTION number (2.2) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // socket.emit from Admin text ... Welcome to the chat app
+    /*
     socket.emit('pesanCinta', {
         from : 'Admin',
         text : 'Selamat datang di NODE CHAT APP',
         createdAt : time
-    });
+    }); 
 
     // socket.broadcast.emit ... from Admin text ... New user joined
     socket.broadcast.emit('pesanCinta', {
         from : 'Admin',
         text: 'User baru bergabung woiiiiii',
         createdAt : time
-    })
+    }) */
 
     /// ~~~~~~~~~~~~~~~~ SECTION number (2.1) --- backend  ~~~~~~~~~~~~~~~~~~~~~~~~~
-    socket.on('Hahaha', (pesan) => { /// ini perintahnya.. ini buatan SAYA
+    socket.on('Hahaha', (pesan, callback) => { /// ini perintahnya.. ini buatan SAYA
         console.log('buat pesan', pesan); /// ini muncul di SERVER
-
-        socket.broadcast.emit('pesanDatang', {  /// yang digunakan front end
+        io.emit('pesanCinta', generatePesan(pesan.from, pesan.text))
+        callback('this is ACK from server --> ini data dari SERVER looo');
+        /*socket.broadcast.emit('pesanDatang', {  /// yang digunakan front end
             from : pesan.from,
             text: pesan.text,
             dibuatPada : new Date().getTime()
-        })  
+        })  */
 
     })
 
