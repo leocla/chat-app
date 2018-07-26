@@ -52,17 +52,27 @@ socket.on('pesanDatang', function(pesan){
 })
 
 /// ~~~~~~~~~~~~~~~~ SECTION number (2.2) --- front end --- welcome by admin ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/// berarti yang digunakan yang ini bro -- jQuery
 socket.on('pesanCinta', function(pesan){
-    console.log(JSON.stringify(pesan, undefined, 2));
+    console.log(JSON.stringify(pesan, undefined, 0));
+    // get data
+    var li = jQuery('<li></li>');
+    li.text(`${pesan.from} : ${pesan.text}`);
+    
+    // data akan di render ke UI 
+    jQuery('#pesan').append(li);
 })
 
 /// ~~~~~~~~~~~~~~~~ SECTION (2.3) in this file
+/// untuk jQuery --- sementara dihapus
+/*
 socket.emit('Hahaha', {
     from : 'Tononk',
     text : 'Hi'
 }, function(data){
     console.log('Hore Got it :', data);
 });
+*/
 
 
 /**
@@ -70,3 +80,18 @@ socket.emit('Hahaha', {
  * ~~~~~~~~~~~~~~~~~~~
  * socket.emit('createMessage', {from: 'Toni', text:'Hy dunia'})
  */
+
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/// SECTION (2.4) -- jQuery -- message form
+
+jQuery('#pesan-form').on('submit', function(ehe){
+   ehe.preventDefault(); // untuk mencegah reload/refresh page...
+   //disini kasusnya mencegah reload sesudah klik tombol 'kirim' --- silahkan buktikan sendiri dan inyong sudah membuktikan
+
+   socket.emit('Hahaha', {
+       from: 'User Asik',
+       text: jQuery('[name=pesan]').val()
+   }, function(){
+        //console.log(text)
+   })
+})

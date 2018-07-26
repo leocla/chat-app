@@ -9,7 +9,22 @@
         <p>Aplikasi ini semacam chattingan</p>
         <p>Aplikasi antara Server + Client yang saling berkomunikasi</p>
 
+        <!--render html-->
+        <ol id="pesan"></ol>
+
+        <!--submit message-->
+        <form id="pesan-form">
+            <input name="pesan" type="text" placeholder="Tulis pesan disini..."/>
+            <button id="kirim_klik">Kirim</button>
+        </form>
+
         <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/libs/jquery.min.js"></script>
         <script src="/js/index.js"></script>
+        <script>
+            // $("#kirim_klik").click(function(){
+            //     alert('Selamat!!! Pesan terkirim')
+            // })
+        </script>
     </body>
 </html>
