@@ -95,3 +95,47 @@ jQuery('#pesan-form').on('submit', function(ehe){
         //console.log(text)
    })
 })
+
+var lokasiButton = jQuery('#kirim-lokasi');
+// sama dengan ::: jQuery('#kirim-lokasi').on()
+lokasiButton.on('click', function(e){ // menggunakan perintah klik
+    e.preventDefault();
+
+    //alert('Berhasil diklik')
+    if(!navigator.geolocation){
+        return alert('no lokasi - Geolokasi tidak didukung oleh browser anda')
+    }
+
+    navigator.geolocation.getCurrentPosition(function(position){
+       // if Sukses
+        console.log(position);
+        let lat = position.coords.latitude;
+        let long = position.coords.longitude;
+        var hasilLokasi = document.getElementById('apps');
+        hasilLokasi.innerHTML = `<p>Hasil lokasi latitude-nya adalah ${lat} sedangkan longitude-nya adalah ${long}`;
+        
+        // socket
+        socket.emit('buatLokasiPesan', {
+            lat,
+            long
+        });
+
+    }, function(){
+        // if not sukses dan tidak diijinkan akses ambil lokasi
+       // alert('Gagal mengambil lokasi');
+        //\\outputHore.innerHTML('<p>Gagal mengambil lokasi... Hehehe</p>') // SALAH
+        var outputHore = document.getElementById('apps')
+        outputHore.innerHTML = '<p>Maaf, gagal mengambil lokasi</p>'
+        //~~~ bawah ini benar
+        //var telo = document.getElementById('apps');
+        //telo.innerHTML = 'asik'
+    }); 
+
+    //my code is NOT YET ... ternyata benar
+    // navigator.geolocation.getCurrentPosition(function(position){
+    //     let lat = position.coords.latitude;
+    //     let lang = position.coords.longitude;
+    //     console.log(`Hasile adalah Lat : ${lat} dan Long : ${lang}`);
+    // })
+
+})

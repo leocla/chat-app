@@ -61,8 +61,15 @@ io.on('connection', (socket) => {
             text: pesan.text,
             dibuatPada : new Date().getTime()
         })  */
-
     })
+    /// ~~~~~~~~~~~~~~~ SECTION 2.4 ~~~~~~~~~~ GEOLOKASI
+    socket.on('buatLokasiPesan', (koordinat) => {
+        // print in apps client
+        io.emit('pesanCinta', generatePesan('Admin', `Lokasi: ${koordinat.lat}, ${koordinat.long}`))
+        // print in server log
+        console.log(`Mengirim koordinat : lat ${koordinat.lat} dan long ${koordinat.long}`)
+    });
+
 
     //~~ iki solution broooo
     // socket.emit('newMessage', {
