@@ -2,7 +2,7 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
-const {generatePesan} = require('./utils/pesan')
+const {generatePesan, generateLokasiPesan} = require('./utils/pesan')
 
 const publik_path = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000
@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
     /// ~~~~~~~~~~~~~~~ SECTION 2.4 ~~~~~~~~~~ GEOLOKASI
     socket.on('buatLokasiPesan', (koordinat) => {
         // print in apps client
-        io.emit('pesanCinta', generatePesan('Admin', `Lokasi: ${koordinat.lat}, ${koordinat.long}`))
+        io.emit('pesanLokasiCinta', generateLokasiPesan('Admin', koordinat.lat, koordinat.long))
         // print in server log
         console.log(`Mengirim koordinat : lat ${koordinat.lat} dan long ${koordinat.long}`)
     });

@@ -1,6 +1,6 @@
 var expect = require('expect')
 
-var {generatePesan} = require('./pesan')
+var {generatePesan, generateLokasiPesan} = require('./pesan')
 
 describe('Generate Pesan', () => {
     it('Harus generate pesan yang benar', (done) => {
@@ -36,5 +36,22 @@ describe('Generate Pesan', () => {
         expect(createdAt).toBeA('number');
         done()
         */
+    });
+});
+
+// testing lokasi ... lokasi yang diberikan benar atau tidak
+describe('Testing Lokasi', () => {
+    it('Harus menentukan lokasi sudah benar dari objek', (done)=> {
+        var from ="Admin2"
+        var lat = 15;
+        var long = 1;
+        var url = `https://www.google.com/maps?q=15,1`;
+        var lokasi = generateLokasiPesan(from, lat, long);
+    
+        // make association
+        ///expect(url).toInclude(15,1) // ini salah
+        expect(lokasi.createdAt).toBeA('number');
+        expect(lokasi).toInclude({from, url})
+        done();
     })
 })

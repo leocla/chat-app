@@ -81,6 +81,17 @@ socket.emit('Hahaha', {
  * socket.emit('createMessage', {from: 'Toni', text:'Hy dunia'})
  */
 
+//// ~~~~~~~~~~~~~~~~~~~~~~~~ SECTION 2.5 ~~~~~~~~~~~
+socket.on('pesanLokasiCinta', function(lokasi){
+    var li_lokasi = jQuery('<li></li>');
+    var a = jQuery('<a target="_blank">My current location</a>');
+
+    li_lokasi.text(`${lokasi.from}: `);
+    a.attr('href', lokasi.url);
+    li_lokasi.append(a);
+    jQuery('#pesan').append(li_lokasi);
+
+})
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// SECTION (2.4) -- jQuery -- message form
 
