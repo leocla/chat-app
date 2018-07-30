@@ -55,7 +55,8 @@ io.on('connection', (socket) => {
     socket.on('Hahaha', (pesan, callback) => { /// ini perintahnya.. ini buatan SAYA
         console.log('buat pesan', pesan); /// ini muncul di SERVER
         io.emit('pesanCinta', generatePesan(pesan.from, pesan.text))
-        callback('this is ACK from server --> ini data dari SERVER looo');
+        //callback('this is ACK from server --> ini data dari SERVER looo');
+        callback(); // dikosongi untuk menghilangkan pesan yang ada dalam kolom penulisan pesan ketika pesan sudah dikirim
         /*socket.broadcast.emit('pesanDatang', {  /// yang digunakan front end
             from : pesan.from,
             text: pesan.text,

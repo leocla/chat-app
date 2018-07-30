@@ -99,11 +99,14 @@ jQuery('#pesan-form').on('submit', function(ehe){
    ehe.preventDefault(); // untuk mencegah reload/refresh page...
    //disini kasusnya mencegah reload sesudah klik tombol 'kirim' --- silahkan buktikan sendiri dan inyong sudah membuktikan
 
+   var pesanTextBox = jQuery('[name=pesan]');
    socket.emit('Hahaha', {
        from: 'User Asik',
-       text: jQuery('[name=pesan]').val()
+       text: pesanTextBox.val()
    }, function(){
         //console.log(text)
+
+        pesanTextBox.val('')
    })
 })
 
@@ -117,7 +120,11 @@ lokasiButton.on('click', function(e){ // menggunakan perintah klik
         return alert('no lokasi - Geolokasi tidak didukung oleh browser anda')
     }
 
+    lokasiButton.attr('disabled', 'disabled').text('sedang proses mengirim lokasi...');// untuk disable button
+
     navigator.geolocation.getCurrentPosition(function(position){
+        lokasiButton.removeAttr('disabled').text('Kirim lokasi');
+
        // if Sukses
         console.log(position);
         let lat = position.coords.latitude;
@@ -132,6 +139,7 @@ lokasiButton.on('click', function(e){ // menggunakan perintah klik
         });
 
     }, function(){
+        lokasiButton.removeAttr('disabled').text('Kirim lokasi');
         // if not sukses dan tidak diijinkan akses ambil lokasi
        // alert('Gagal mengambil lokasi');
         //\\outputHore.innerHTML('<p>Gagal mengambil lokasi... Hehehe</p>') // SALAH

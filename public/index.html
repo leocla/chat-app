@@ -3,23 +3,33 @@
     <head>
         <meta charset="utf-8">
         <title>TESTING NODE CHAT</title>
+        <link rel="stylesheet" href="/css/styles.css">
     </head>
-    <body>
-        <h2>Selamat Datang di Aplikasi Chatting</h2>
+    <body class="chat">
+        <!-- <h2>Selamat Datang di Aplikasi Chatting</h2>
         <p>Aplikasi ini semacam chattingan</p>
-        <p>Aplikasi antara Server + Client yang saling berkomunikasi</p>
+        <p>Aplikasi antara Server + Client yang saling berkomunikasi</p> -->
+        <div class="chat__sidebar">
+            <h3>User People</h3>
+            <div id="users"></div>
+        </div>
 
-        <!--render html-->
-        <ol id="pesan"></ol>
+        <div class="chat__main">
+            <!--render html-->
+            <ol id="pesan" class="chat__messages"></ol>
 
-        <!--submit message-->
-        <form id="pesan-form">
-            <input name="pesan" type="text" placeholder="Tulis pesan disini..."/>
-            <button id="kirim_klik">Kirim</button>
-        </form>
+            <div class="chat__footer">
+                <!--submit message-->
+                <form id="pesan-form">
+                    <input name="pesan" type="text" placeholder="Tulis pesan disini..." autofocus autocomplete="off"/>
+                    <button id="kirim_klik">Kirim</button>
+                </form>
+                <!-- adding button location -->
+                <button id="kirim-lokasi">Kirim Lokasi</button>
+            </div>
+        </div>
 
-        <!-- adding button location -->
-        <button id="kirim-lokasi">Kirim Lokasi</button>
+        
 
         <div id="apps"></div>
 
