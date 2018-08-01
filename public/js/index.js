@@ -55,19 +55,32 @@ socket.on('pesanDatang', function(pesan){
 /// berarti yang digunakan yang ini bro -- jQuery
 socket.on('pesanCinta', function(pesan){
     console.log(JSON.stringify(pesan, undefined, 0));
+    var waktu = moment(pesan.createdAt).format('h:mm a');
 
     /*
     var time = pesan.createdAt;
     var waktu = moment(time).locale('id');
     //console.log(waktu.format('d MMMM YYYY')); */
     // singkatnya
+
+    /*
     var waktu = moment(pesan.createdAt);
     // get data
     var li = jQuery('<li></li>');
     li.text(`${pesan.from} - (${waktu.format('h:mm a')}) : ${pesan.text}`);
     
     // data akan di render ke UI 
-    jQuery('#pesan').append(li);
+    jQuery('#pesan').append(li); */
+
+    ///// MUSTACHE
+    var template = jQuery('#pesan-template').html();
+    var html = Mustache.render(template, {
+        teks: pesan.text,
+        from : pesan.from,
+        createdAt: waktu
+    });
+
+    jQuery('#pesan').append(html);
 })
 
 /// ~~~~~~~~~~~~~~~~ SECTION (2.3) in this file
@@ -90,6 +103,7 @@ socket.emit('Hahaha', {
 
 //// ~~~~~~~~~~~~~~~~~~~~~~~~ SECTION 2.5 ~~~~~~~~~~~
 socket.on('pesanLokasiCinta', function(lokasi){
+    /*
     var li_lokasi = jQuery('<li></li>');
     var a = jQuery('<a target="_blank">My current location</a>');
     var waktu = moment(pesan.createdAt);
@@ -99,7 +113,18 @@ socket.on('pesanLokasiCinta', function(lokasi){
     a.attr('href', lokasi.url);
     li_lokasi.append(a);
     jQuery('#pesan').append(li_lokasi);
+    */
+   // ~~~ MUSTACHE
 
+    var waktu = moment(pesan.createdAt).format('h:mm a');
+    var template = jQuery('#lokasi-template').html();
+    var html = Mustache.render(template, {
+        lokasi: lokasi.url,
+        from : lokasi.from,
+        createdAt : waktu
+    })
+
+    jQuery('#pesan').append(html);
 })
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// SECTION (2.4) -- jQuery -- message form
