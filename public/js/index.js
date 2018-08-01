@@ -42,7 +42,7 @@ socket.on('message', function(newMessage){
 } )
 
 socket.on('pesanBaru', function(newMessage){
-    console.log('Pesan Baru brooo: ', JSON.stringify(newMessage))
+    //console.log('Pesan Baru brooo: ', JSON.stringify(newMessage))
 })
 
 /// ~~~~~~~~~~~~~~~~ SECTION number (2.1) --- front end ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,9 +55,16 @@ socket.on('pesanDatang', function(pesan){
 /// berarti yang digunakan yang ini bro -- jQuery
 socket.on('pesanCinta', function(pesan){
     console.log(JSON.stringify(pesan, undefined, 0));
+
+    /*
+    var time = pesan.createdAt;
+    var waktu = moment(time).locale('id');
+    //console.log(waktu.format('d MMMM YYYY')); */
+    // singkatnya
+    var waktu = moment(pesan.createdAt);
     // get data
     var li = jQuery('<li></li>');
-    li.text(`${pesan.from} : ${pesan.text}`);
+    li.text(`${pesan.from} - (${waktu.format('h:mm a')}) : ${pesan.text}`);
     
     // data akan di render ke UI 
     jQuery('#pesan').append(li);
@@ -85,8 +92,10 @@ socket.emit('Hahaha', {
 socket.on('pesanLokasiCinta', function(lokasi){
     var li_lokasi = jQuery('<li></li>');
     var a = jQuery('<a target="_blank">My current location</a>');
+    var waktu = moment(pesan.createdAt);
+    var waktuLokasi = waktu.format('h: mm a');
 
-    li_lokasi.text(`${lokasi.from}: `);
+    li_lokasi.text(`${lokasi.from}: (${waktuLokasi}) `);
     a.attr('href', lokasi.url);
     li_lokasi.append(a);
     jQuery('#pesan').append(li_lokasi);
@@ -101,7 +110,7 @@ jQuery('#pesan-form').on('submit', function(ehe){
 
    var pesanTextBox = jQuery('[name=pesan]');
    socket.emit('Hahaha', {
-       from: 'User Asik',
+       from: 'Toni Ho',
        text: pesanTextBox.val()
    }, function(){
         //console.log(text)
