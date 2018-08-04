@@ -5,6 +5,27 @@
 
 var socket = io();
 
+function scrollKeBawah() {
+    /// selector
+    var pesan = jQuery('#pesan');
+
+    // USING SELECTOR
+    var pesanLagi = pesan.children('li:last-child');
+
+    // height
+    var clientHeight = pesan.prop('clientHeight');
+    var scrollAtas = pesan.prop('scrollTop'); /// beda
+    var scrollHeight = pesan.prop('scrollHeight');
+    var tinggiPesanBaru = pesanLagi.innerHeight();
+    var lastPesanHeigth = pesanLagi.prev().innerHeight();
+
+
+    if (clientHeight + scrollAtas + tinggiPesanBaru + lastPesanHeigth >= scrollHeight){
+        //console.log('seharusnya scroll...')
+       pesan.scrollTop(scrollHeight); // jquery 
+    }
+}
+
 socket.on('connect', function() {
     console.log('connected to server');
 
@@ -81,6 +102,7 @@ socket.on('pesanCinta', function(pesan){
     });
 
     jQuery('#pesan').append(html);
+    scrollKeBawah();
 })
 
 /// ~~~~~~~~~~~~~~~~ SECTION (2.3) in this file
@@ -125,6 +147,7 @@ socket.on('pesanLokasiCinta', function(lokasi){
     })
 
     jQuery('#pesan').append(html);
+    scrollKeBawah();
 })
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// SECTION (2.4) -- jQuery -- message form
