@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>TESTING NODE CHAT</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body class="chat">
+        <!-- <h2>Selamat Datang di Aplikasi Chatting</h2>
+        <p>Aplikasi ini semacam chattingan</p>
+        <p>Aplikasi antara Server + Client yang saling berkomunikasi</p> -->
+        <div class="chat__sidebar">
+            <h3>User People</h3>
+            <div id="users"></div>
+        </div>
+
+        <div class="chat__main">
+            <!--render html-->
+            <ol id="pesan" class="chat__messages"></ol>
+
+            <div class="chat__footer">
+                <!--submit message-->
+                <form id="pesan-form">
+                    <input name="pesan" type="text" placeholder="Tulis pesan disini..." autofocus autocomplete="off"/>
+                    <button id="kirim_klik">Kirim</button>
+                </form>
+                <!-- adding button location -->
+                <button id="kirim-lokasi">Kirim Lokasi</button>
+            </div>
+        </div>
+
+        
+
+        <div id="apps"></div>
+
+        <script id="pesan-template" type="text/template">
+            <li class="message">
+                <div class="message__title">
+                    <h4>{{from}}</h4> <span>{{createdAt}} </span>
+                </div>
+                <div class="message__body">
+                    <p>{{teks}}</p>
+                </div>
+            </li>
+        </script>
+
+        <script id="lokasi-template" type="text/template">
+            <li class="message">
+                    <div class="message__title">
+                        <h4>{{from}}</h4> <span>{{createdAt}} </span>
+                    </div>
+                    <div class="message__body">
+                        <a href="{{lokasi}}" target="_blank">Lokasi disini</a>
+                    </div>
+                </li>
+        </script>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/libs/jquery.min.js"></script>
+        <script src="/js/libs/moment.js"></script>
+        <script src="/js/libs/mustache.js"></script>
+        <script src="/js/chat.js"></script>
+        <script>
+            // $("#kirim-lokasi").click(function(){
+            //     alert('Selamat!!! Lokasi anda terkirim')
+            // })
+        </script>
+    </body>
+</html>
