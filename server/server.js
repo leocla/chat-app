@@ -2,7 +2,8 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
-const {generatePesan, generateLokasiPesan} = require('./utils/pesan')
+const {generatePesan, generateLokasiPesan} = require('./utils/pesan');
+const {isRealString} = require('./utils/validation');
 
 const publik_path = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000
@@ -28,9 +29,29 @@ var time = new Date().getTime();
 io.on('connection', (socket) => { 
     console.log('User baru telah terkoneksi');
 
-    // ~~~~~~~~~~~~~~~~ SECTION number (2.3)
-    socket.emit('pesanCinta', generatePesan('Admin', 'Selamat Datang di aplikasi chat'))
-    socket.broadcast.emit('pesanCinta', generatePesan('Admin', 'User baru joined'))
+    /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SECTION  2.5  ---- join event
+    socket.on('join', (params, callback) => {
+        if(!isRealString(params.name) || !isRealString(params.room)){
+            callback('Nama dan Room dibutuhkan coy');
+        }
+
+        // membuat orang lain bisa join
+        socket.join(params.room);
+
+        // socket.leave('Kantor A')
+
+        // io.emit ---> io.to('Kantor A').emit
+        // socket.broadcast.emit  --> socket.broadcast.to('Kantor A').emit
+        //socket.emit
+
+        
+        // ~~~~~~~~~~~~~~~~ SECTION number (2.3) --- moving here
+        socket.emit('pesanCinta', generatePesan('Admin', `Selamat Datang di aplikasi chat, ${params.name}`))
+        socket.broadcast.to(params.room).emit('pesanCinta', generatePesan('Admin', `${params.name} telah bergabung`));
+    
+        callback();
+    });
+    
     //~~~~~~~ GUIDE
     // socket.emit from Admin text ... Welcome to the chat app
     // socket.broadcast.emit ... from Admin text ... New user joined

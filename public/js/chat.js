@@ -28,6 +28,19 @@ function scrollKeBawah() {
 
 socket.on('connect', function() {
     console.log('connected to server');
+    var params = jQuery.deparam(window.location.search);
+    console.log(params);   
+
+    socket.emit('join', params, function (err) {
+        if (err) {
+            // jika ada error maka akan redirection ke halaman awal
+            alert(err);
+            window.location.href = '/';
+        } else {
+            // is no err
+            console.log('No error');
+        }
+    });
 
     /// ~~~ client to server
     /*
@@ -158,7 +171,7 @@ jQuery('#pesan-form').on('submit', function(ehe){
 
    var pesanTextBox = jQuery('[name=pesan]');
    socket.emit('Hahaha', {
-       from: 'Toni Ho',
+       from: 'User Bro',
        text: pesanTextBox.val()
    }, function(){
         //console.log(text)

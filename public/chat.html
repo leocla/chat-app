@@ -60,11 +60,16 @@
         <script src="/js/libs/jquery.min.js"></script>
         <script src="/js/libs/moment.js"></script>
         <script src="/js/libs/mustache.js"></script>
+        <script src="/js/libs/deparam.js"></script>
         <script src="/js/chat.js"></script>
+        
         <script>
             // $("#kirim-lokasi").click(function(){
             //     alert('Selamat!!! Lokasi anda terkirim')
             // })
+            console.log(JSON.stringify(window.location.search));
+            let tempe = jQuery.deparam(window.location.search);
+            console.log(JSON.stringify(tempe));
         </script>
     </body>
 </html>

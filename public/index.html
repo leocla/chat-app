@@ -31,7 +31,7 @@
         <div id="app-1"></div>
         <div id="app-2"></div>
 
-
+        <button onclick="delAll()">Delete</button>
         <script>
             // let el = document.createElement('p');
             // let tx = document.createTextNode('Database Admin');
@@ -39,6 +39,11 @@
 
             // let app = document.getElementById('app-1');
             // app.appendChild(el);
+           //w console.log(location);
+           delAll = () => {
+               let getEl = document.getElementsByClassName('centered-form')[0];
+               getEl.innerHTML = "";
+           }
         </script>
     </body>
 </html>
