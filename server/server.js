@@ -5,6 +5,8 @@ const socketIO = require('socket.io')
 const {generatePesan, generateLokasiPesan} = require('./utils/pesan');
 const {isRealString} = require('./utils/validation');
 
+const {Users} = require('./utils/users');
+
 const publik_path = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000
 var app = express()
@@ -18,6 +20,11 @@ const pesan = require('./utils/pesan')
 
 var server = http.createServer(app)
 var io = socketIO(server)
+
+// create .... @27/08/2018
+var users = new Users();
+
+
 app.use(express.static(publik_path)) // middleware
 
 /// GET TIME --- membuat new variable waktu
@@ -32,11 +39,18 @@ io.on('connection', (socket) => {
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SECTION  2.5  ---- join event
     socket.on('join', (params, callback) => {
         if(!isRealString(params.name) || !isRealString(params.room)){
-            callback('Nama dan Room dibutuhkan coy');
+            return callback('Nama dan Room dibutuhkan coy');
         }
 
         // membuat orang lain bisa join
         socket.join(params.room);
+
+        /// new create on @27/08/2018
+        users.removeUser(socket.id);
+        users.addUser(socket.id, params.name, params.room);
+
+        io.to(params.room).emit('updateUserList', users.getUserList(params.room)); /// get from chat.js
+
 
         // socket.leave('Kantor A')
 
@@ -141,6 +155,12 @@ io.on('connection', (socket) => {
     // ~~~~~~~~~ end gaweanku
 
     socket.on('disconnect', () => {
+        // code created @@27/08/2018
+        var user = users.removeUser(socket.id);
+        if(user){
+            io.to(user.room).emit('updateUserList', users.getUserList(users.room)); /// digunakan untuk update user list
+            io.to(user.room).emit('pesanCinta', generatePesan('Admin', `${user.name} telah keluar`)); // print little message
+        }
         console.log('User telah disconnected')
     })
 

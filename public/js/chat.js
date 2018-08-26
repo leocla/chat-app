@@ -65,6 +65,22 @@ socket.on('disconnect', function() {
     console.log('Putus dari server')
 });
 
+
+/// adding new LISTENER  /// 27 agustus 2018
+socket.on('updateUserList', function(users){
+    console.log('daftar user', users);
+    var ol = jQuery('<ol></ol>');
+
+    users.forEach(function(user){
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+
+    /// select from chat.html by ID
+    jQuery('#users').html(ol);
+})
+
+
 // socket.on('emailBaru', function(email){
 //     console.log('Email baru hehehe', email);
 //     console.log(JSON.stringify(email, undefined, 2))
