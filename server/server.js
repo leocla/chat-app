@@ -86,10 +86,18 @@ io.on('connection', (socket) => {
         createdAt : time
     }) */
 
-    /// ~~~~~~~~~~~~~~~~ SECTION number (2.1) --- backend  ~~~~~~~~~~~~~~~~~~~~~~~~~
+    /// ~~~~~~~~~~~~~~~~ SECTION number (2.1) --- backend  ~~~~~~~~~~~~~~~~~~~~~~~~~ /// sinonim dari createMessage
     socket.on('Hahaha', (pesan, callback) => { /// ini perintahnya.. ini buatan SAYA
-        console.log('buat pesan', pesan); /// ini muncul di SERVER
-        io.emit('pesanCinta', generatePesan(pesan.from, pesan.text))
+        //console.log('buat pesan', pesan); /// ini muncul di SERVER
+        // new code create @27/08/2018
+        var user = users.getUser(socket.id); // get from getUser in users.js
+
+        /// digunakan untuk private chat... ruang beda chat tidak keluar
+        if(user && isRealString(pesan.text)){
+            io.to(user.room).emit('pesanCinta', generatePesan(user.name, pesan.text));
+        }
+
+        
         //callback('this is ACK from server --> ini data dari SERVER looo');
         callback(); // dikosongi untuk menghilangkan pesan yang ada dalam kolom penulisan pesan ketika pesan sudah dikirim
         /*socket.broadcast.emit('pesanDatang', {  /// yang digunakan front end
@@ -100,10 +108,18 @@ io.on('connection', (socket) => {
     })
     /// ~~~~~~~~~~~~~~~ SECTION 2.4 ~~~~~~~~~~ GEOLOKASI
     socket.on('buatLokasiPesan', (koordinat) => {
+        // code create in @27/08/2018
+        // private send location  --- hanya muncul pada ROOM yang sama
+        var user = users.getUser(socket.id);
+        if(user){
+            io.to(user.room).emit('pesanLokasiCinta', generateLokasiPesan(user.name, koordinat.lat, koordinat.long));
+        }
+
+
         // print in apps client
-        io.emit('pesanLokasiCinta', generateLokasiPesan('Admin', koordinat.lat, koordinat.long))
+        
         // print in server log
-        console.log(`Mengirim koordinat : lat ${koordinat.lat} dan long ${koordinat.long}`)
+        console.log(`Mengirim koordinat : lat ${koordinat.lat} dan long ${koordinat.long}`);
     });
 
 

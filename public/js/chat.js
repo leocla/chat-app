@@ -186,7 +186,7 @@ jQuery('#pesan-form').on('submit', function(ehe){
    //disini kasusnya mencegah reload sesudah klik tombol 'kirim' --- silahkan buktikan sendiri dan inyong sudah membuktikan
 
    var pesanTextBox = jQuery('[name=pesan]');
-   socket.emit('Hahaha', {
+   socket.emit('Hahaha', {  // Hahaha === createMessage in COURSE
        from: 'User Bro',
        text: pesanTextBox.val()
    }, function(){
@@ -215,8 +215,8 @@ lokasiButton.on('click', function(e){ // menggunakan perintah klik
         console.log(position);
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
-        var hasilLokasi = document.getElementById('apps');
-        hasilLokasi.innerHTML = `<p>Hasil lokasi latitude-nya adalah ${lat} sedangkan longitude-nya adalah ${long}`;
+        //var hasilLokasi = document.getElementById('apps');
+        //hasilLokasi.innerHTML = `<p>Hasil lokasi latitude-nya adalah ${lat} sedangkan longitude-nya adalah ${long}`;
         
         // socket
         socket.emit('buatLokasiPesan', {
